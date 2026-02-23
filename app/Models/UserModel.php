@@ -4,18 +4,11 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ArticleModel extends Model
+class UserModel extends Model
 {
-    protected $table            = 'articles';
-    protected $allowedFields    = ['title', 'content', 'category_id', 'image'];
-
-    public function getAll()
-    {
-        return $this->select('articles.*, categories.name as category, users.name')
-            ->join('categories', 'categories.id = articles.category_id')
-            ->join('users', 'users.id = articles.user_id', 'left')
-            ->findAll();
-    }
+    protected $table = 'users';
+    protected $allowedFields = ['name','email','password','role'];
+    protected $useTimestamps = false;
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -24,7 +17,6 @@ class ArticleModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';

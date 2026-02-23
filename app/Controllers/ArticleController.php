@@ -29,10 +29,12 @@ class ArticleController extends BaseController
 
     public function create()
     {
+        if (session()->get('role') != 'admin') {
+        return redirect()->to('/')->with('error', 'Akses ditolak! Anda bukan admin.');
+        }
+
         $categoryModel = new CategoryModel();
-
         $data['categories'] = $categoryModel->findAll();
-
         return view('articles/create', $data);
     }
 
@@ -41,6 +43,7 @@ class ArticleController extends BaseController
         $validation = \Config\Services::validation();
 
     $rules = [
+        
         'title' => 'required|min_length[5]',
         'content' => 'required',
         'category_id' => 'required',
@@ -63,7 +66,8 @@ class ArticleController extends BaseController
         'title' => $this->request->getPost('title'),
         'content' => $this->request->getPost('content'),
         'category_id' => $this->request->getPost('category_id'),
-        'image' => $namaFile
+        'image' => $namaFile,
+        'user_id'     => session()->get('user_id')
     ]);
 
     return redirect()->to('/')->with('success', 'Artikel berhasil ditambahkan');
@@ -71,6 +75,10 @@ class ArticleController extends BaseController
 
     public function edit($id)
     {
+        if (session()->get('role') != 'admin') {
+        return redirect()->to('/')->with('error', 'Akses ditolak!');
+        }
+
         $articleModel = new ArticleModel();
         $categoryModel = new CategoryModel();
 

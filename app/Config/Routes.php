@@ -16,11 +16,20 @@ $routes->post('/categories/update/(:num)', 'CategoryController::update/$1');
 $routes->post('/categories/delete/(:num)', 'CategoryController::delete/$1');
 
 // ARTICLE
-$routes->get('/', 'ArticleController::index');
-$routes->get('/articles/create', 'ArticleController::create');
-$routes->post('/articles/store', 'ArticleController::store');
-$routes->get('/articles/edit/(:num)', 'ArticleController::edit/$1');
-$routes->post('/articles/update/(:num)', 'ArticleController::update/$1');
-$routes->post('/articles/delete/(:num)', 'ArticleController::delete/$1');
+$routes->group('', ['filter'=>'auth'], function($routes){
+    $routes->get('/', 'ArticleController::index');
+    $routes->get('/articles/create', 'ArticleController::create');
+    $routes->post('/articles/store', 'ArticleController::store');
+    $routes->get('/articles/edit/(:num)', 'ArticleController::edit/$1');
+    $routes->post('/articles/update/(:num)', 'ArticleController::update/$1');
+    $routes->post('/articles/delete/(:num)', 'ArticleController::delete/$1');
+});
 $routes->get('/article/(:num)', 'ArticleController::detail/$1');
+
+
+//login
+$routes->get('/login', 'Auth::login');
+$routes->post('/login', 'Auth::process');
+// $routes->get('/logout', 'Auth::logout');
+$routes->get('/logout', 'Auth::logout', ['filter' => 'auth']);
 

@@ -12,7 +12,7 @@
             <?= $a['title'] ?>
         </a>
         <br>
-        <small>Kategori: <?= $a['category'] ?></small>
+        <small>Kategori: <?= $a['category'] ?> | Penulis: <?= $a['name'] ?></small>
     </li>
 <?php endforeach ?>
 </ul>
@@ -26,7 +26,7 @@
     <th>No</th>
     <th>Judul</th>
     <th>Kategori</th>
-    <th>Aksi</th>
+    <th>Penulis</th> <th>Aksi</th>
 </tr>
 
 <?php $no=1; foreach($articles as $a): ?>
@@ -34,7 +34,7 @@
     <td><?= $no++ ?></td>
     <td><?= $a['title'] ?></td>
     <td><?= $a['category'] ?></td>
-    <td>
+    <td><?= $a['name'] ?></td> <td>
         <a href="/article/<?= $a['id'] ?>">Detail</a>
         <a href="/articles/edit/<?= $a['id'] ?>">Edit</a>
 
